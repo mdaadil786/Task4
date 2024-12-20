@@ -2,8 +2,8 @@
 import java.awt.*;
 
     public class SudokuSolverGUI {
-        private static final int GRID_SIZE = 9; // 9x9 Sudoku grid
-        private static final int SUBGRID_SIZE = 3; // 3x3 subgrid
+        private static final int GRID_SIZE = 9; 
+        private static final int SUBGRID_SIZE = 3; 
         private JTextField[][] grid = new JTextField[GRID_SIZE][GRID_SIZE];
 
         public static void main(String[] args) {
@@ -11,13 +11,10 @@ import java.awt.*;
         }
 
         public SudokuSolverGUI() {
-            // Create the main frame
             JFrame frame = new JFrame("Sudoku Solver");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setSize(500, 500);
             frame.setLayout(new BorderLayout());
-
-            // Create the grid panel
             JPanel gridPanel = new JPanel();
             gridPanel.setLayout(new GridLayout(GRID_SIZE, GRID_SIZE));
             for (int row = 0; row < GRID_SIZE; row++) {
@@ -28,8 +25,6 @@ import java.awt.*;
                     gridPanel.add(grid[row][col]);
                 }
             }
-
-            // Buttons panel
             JPanel buttonsPanel = new JPanel();
             buttonsPanel.setLayout(new FlowLayout());
 
@@ -39,11 +34,11 @@ import java.awt.*;
             buttonsPanel.add(solveButton);
             buttonsPanel.add(clearButton);
 
-            // Add components to the frame
+           
             frame.add(gridPanel, BorderLayout.CENTER);
             frame.add(buttonsPanel, BorderLayout.SOUTH);
 
-            // Action listener for the solve button
+           
             solveButton.addActionListener(e -> {
                 int[][] board = new int[GRID_SIZE][GRID_SIZE];
                 if (readInput(board)) {
@@ -57,7 +52,7 @@ import java.awt.*;
                 }
             });
 
-            // Action listener for the clear button
+           
             clearButton.addActionListener(e -> {
                 for (int row = 0; row < GRID_SIZE; row++) {
                     for (int col = 0; col < GRID_SIZE; col++) {
@@ -65,12 +60,10 @@ import java.awt.*;
                     }
                 }
             });
-
-            // Show the frame
             frame.setVisible(true);
         }
 
-        // Reads input from the grid into a 2D array
+    
         private boolean readInput(int[][] board) {
             try {
                 for (int row = 0; row < GRID_SIZE; row++) {
@@ -83,7 +76,7 @@ import java.awt.*;
                             }
                             board[row][col] = value;
                         } else {
-                            board[row][col] = 0; // Empty cells are 0
+                            board[row][col] = 0; 
                         }
                     }
                 }
@@ -92,8 +85,6 @@ import java.awt.*;
             }
             return true;
         }
-
-        // Displays the solved Sudoku grid in the GUI
         private void displaySolution(int[][] board) {
             for (int row = 0; row < GRID_SIZE; row++) {
                 for (int col = 0; col < GRID_SIZE; col++) {
@@ -101,29 +92,25 @@ import java.awt.*;
                 }
             }
         }
-
-        // Solves the Sudoku puzzle using backtracking
         private boolean solveSudoku(int[][] board) {
             for (int row = 0; row < GRID_SIZE; row++) {
                 for (int col = 0; col < GRID_SIZE; col++) {
-                    if (board[row][col] == 0) { // Empty cell
+                    if (board[row][col] == 0) { 
                         for (int num = 1; num <= GRID_SIZE; num++) {
                             if (isSafe(board, row, col, num)) {
                                 board[row][col] = num;
                                 if (solveSudoku(board)) {
                                     return true;
                                 }
-                                board[row][col] = 0; // Backtrack
+                                board[row][col] = 0; 
                             }
                         }
-                        return false; // No solution found
+                        return false;
                     }
                 }
             }
-            return true; // Solved
+            return true; 
         }
-
-        // Checks if placing a number is valid
         private boolean isSafe(int[][] board, int row, int col, int num) {
             for (int i = 0; i < GRID_SIZE; i++) {
                 if (board[row][i] == num || board[i][col] == num ||
